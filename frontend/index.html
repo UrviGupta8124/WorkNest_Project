@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkNest - Connect with Verified Workers</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="logo">
+                <img src="images\logo.jpg.jpg" alt="WorkNest Logo" >
+                <h1>WorkNest</h1>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active">Home</a>
+                <a href="#">Services</a>
+                <a href="#">How it Works</a>
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                <button id="loginBtn" class="btn btn-outline">Login</button>
+                <button id="registerBtn" class="btn btn-primary">Register</button>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Find Verified Workers Near You</h1>
+                <p>Connect with skilled professionals for all your needs - household repairs, plumbing, electrical work, cleaning, and more!</p>
+                <div class="search-box">
+                    <div class="search-input">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="What service do you need?">
+                    </div>
+                    <div class="location-input">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" id="locationInput" placeholder="Your location">
+                        <button id="detectLocation"><i class="fas fa-crosshairs"></i></button>
+                    </div>
+                    <button class="search-btn btn btn-primary">Find Workers</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="/api/placeholder/500/300" alt="WorkNest Services">
+            </div>
+        </section>
+
+        <!-- Service Categories -->
+        <section class="service-categories">
+            <h2>Popular Service Categories</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon"><i class="fas fa-wrench"></i></div>
+                    <h3>Plumbing</h3>
+                    <p>Leakage, pipe fitting, and more</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>Electrical</h3>
+                    <p>Wiring, repairs, and installations</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon"><i class="fas fa-broom"></i></div>
+                    <h3>Cleaning</h3>
+                    <p>Home and office cleaning services</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon"><i class="fas fa-paint-roller"></i></div>
+                    <h3>Painting</h3>
+                    <p>Interior and exterior painting</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon"><i class="fas fa-hammer"></i></div>
+                    <h3>Carpentry</h3>
+                    <p>Furniture repair and custom work</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon"><i class="fas fa-truck"></i></div>
+                    <h3>Moving</h3>
+                    <p>Packing and transportation services</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="how-it-works">
+            <h2>How WorkNest Works</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-search"></i></div>
+                    <h3>Find Workers</h3>
+                    <p>Search for verified workers based on your location and service needs</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-calendar-check"></i></div>
+                    <h3>Book Service</h3>
+                    <p>Select a worker and schedule a convenient time for the service</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                    <h3>Pay Securely</h3>
+                    <p>Make secure payments through our platform</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon"><i class="fas fa-star"></i></div>
+                    <h3>Rate & Review</h3>
+                    <p>Share your experience and earn loyalty points</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Workers -->
+        <section class="featured-workers">
+            <h2>Our Featured Workers</h2>
+            <div class="workers-grid">
+                <div class="worker-card">
+                    <div class="worker-image">
+                        <img src="/api/placeholder/150/150" alt="Worker Image">
+                    </div>
+                    <div class="worker-info">
+                        <h3>Raj Kumar</h3>
+                        <p class="worker-profession">Electrician</p>
+                        <div class="worker-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.5</span>
+                        </div>
+                        <p class="worker-jobs">83 Jobs Completed</p>
+                        <button class="btn btn-outline">View Profile</button>
+                    </div>
+                </div>
+                <div class="worker-card">
+                    <div class="worker-image">
+                        <img src="/api/placeholder/150/150" alt="Worker Image">
+                    </div>
+                    <div class="worker-info">
+                        <h3>Priya Singh</h3>
+                        <p class="worker-profession">Cleaner</p>
+                        <div class="worker-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>5.0</span>
+                        </div>
+                        <p class="worker-jobs">67 Jobs Completed</p>
+                        <button class="btn btn-outline">View Profile</button>
+                    </div>
+                </div>
+                <div class="worker-card">
+                    <div class="worker-image">
+                        <img src="/api/placeholder/150/150" alt="Worker Image">
+                    </div>
+                    <div class="worker-info">
+                        <h3>Mohan Patel</h3>
+                        <p class="worker-profession">Plumber</p>
+                        <div class="worker-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <span>4.0</span>
+                        </div>
+                        <p class="worker-jobs">95 Jobs Completed</p>
+                        <button class="btn btn-outline">View Profile</button>
+                    </div>
+                </div>
+                <div class="worker-card">
+                    <div class="worker-image">
+                        <img src="/api/placeholder/150/150" alt="Worker Image">
+                    </div>
+                    <div class="worker-info">
+                        <h3>Anita Sharma</h3>
+                        <p class="worker-profession">Painter</p>
+                        <div class="worker-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>4.7</span>
+                        </div>
+                        <p class="worker-jobs">52 Jobs Completed</p>
+                        <button class="btn btn-outline">View Profile</button>
+                    </div>
+                </div>
+            </div>
+            <div class="view-more">
+                <button class="btn btn-outline-large">View All Workers</button>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials">
+            <h2>What Our Users Say</h2>
+            <div class="testimonial-container">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "WorkNest helped me find a reliable electrician within hours when my power went out. The service was excellent and the pricing transparent."
+                    </p>
+                    <div class="testimonial-user">
+                        <img src="/api/placeholder/50/50" alt="User Image">
+                        <div class="user-info">
+                            <h4>Sneha Kapoor</h4>
+                            <p>Delhi</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "As a worker on the platform, I've been able to find steady work in my local area. The loyalty points system is a great bonus too!"
+                    </p>
+                    <div class="testimonial-user">
+                        <img src="/api/placeholder/50/50" alt="User Image">
+                        <div class="user-info">
+                            <h4>Ramesh Kumar</h4>
+                            <p>Mumbai</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "The verification system gives me peace of mind when hiring workers through WorkNest. Will definitely use it again for all home services."
+                    </p>
+                    <div class="testimonial-user">
+                        <img src="/api/placeholder/50/50" alt="User Image">
+                        <div class="user-info">
+                            <h4>Ritu Verma</h4>
+                            <p>Bangalore</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download App -->
+        <section class="download-app">
+            <div class="app-info">
+                <h2>Get the WorkNest App</h2>
+                <p>Find workers on the go, track service status, and manage payments - all from your smartphone.</p>
+                <div class="app-buttons">
+                    <a href="#" class="app-button">
+                        <i class="fab fa-google-play"></i>
+                        <div class="button-text">
+                            <span>GET IT ON</span>
+                            <strong>Google Play</strong>
+                        </div>
+                    </a>
+                    <a href="#" class="app-button">
+                        <i class="fab fa-apple"></i>
+                        <div class="button-text">
+                            <span>Download on the</span>
+                            <strong>App Store</strong>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="app-image">
+                <img src="/api/placeholder/300/500" alt="WorkNest Mobile App">
+            </div>
+        </section>
+
+        <!-- Modal Templates -->
+        <!-- Login Modal -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Login to WorkNest</h2>
+                <div class="tabs">
+                    <div class="tab active" data-tab="user-login">User Login</div>
+                    <div class="tab" data-tab="worker-login">Worker Login</div>
+                </div>
+                <div class="tab-content active" id="user-login">
+                    <form id="userLoginForm">
+                        <div class="form-group">
+                            <label for="userPhone">Phone Number</label>
+                            <input type="tel" id="userPhone" placeholder="Enter your registered phone number" required>
+                        </div>
+                        <div class="form-group otp-group hidden">
+                            <label for="userOtp">Enter OTP</label>
+                            <input type="text" id="userOtp" placeholder="Enter the OTP sent to your phone">
+                            <div class="resend-otp">
+                                <span class="timer">Resend in <span id="userTimer">30</span>s</span>
+                                <a href="#" id="userResendOtp" class="disabled">Resend OTP</a>
+                            </div>
+                        </div>
+                        <button type="button" id="userSendOtp" class="btn btn-primary btn-block">Send OTP</button>
+                        <button type="submit" id="userLoginBtn" class="btn btn-primary btn-block hidden">Login</button>
+                    </form>
+                </div>
+                <div class="tab-content" id="worker-login">
+                    <form id="workerLoginForm">
+                        <div class="form-group">
+                            <label for="workerPhone">Phone Number</label>
+                            <input type="tel" id="workerPhone" placeholder="Enter your registered phone number" required>
+                        </div>
+                        <div class="form-group otp-group hidden">
+                            <label for="workerOtp">Enter OTP</label>
+                            <input type="text" id="workerOtp" placeholder="Enter the OTP sent to your phone">
+                            <div class="resend-otp">
+                                <span class="timer">Resend in <span id="workerTimer">30</span>s</span>
+                                <a href="#" id="workerResendOtp" class="disabled">Resend OTP</a>
+                            </div>
+                        </div>
+                        <button type="button" id="workerSendOtp" class="btn btn-primary btn-block">Send OTP</button>
+                        <button type="submit" id="workerLoginBtn" class="btn btn-primary btn-block hidden">Login</button>
+                    </form>
+                </div>
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" id="switchToRegister">Register Now</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register Modal -->
+        <div id="registerModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Register with WorkNest</h2>
+                <div class="tabs">
+                    <div class="tab active" data-tab="user-register">User Registration</div>
+                    <div class="tab" data-tab="worker-register">Worker Registration</div>
+                </div>
+                <div class="tab-content active" id="user-register">
+                    <form id="userRegisterForm">
+                        <div class="form-group">
+                            <label for="userName">Full Name</label>
+                            <input type="text" id="userName" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userRegPhone">Phone Number</label>
+                            <input type="tel" id="userRegPhone" placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userEmail">Email Address</label>
+                            <input type="email" id="userEmail" placeholder="Enter your email address" required>
+                        </div>
+                        <div class="form-group otp-group hidden">
+                            <label for="userRegOtp">Enter OTP</label>
+                            <input type="text" id="userRegOtp" placeholder="Enter the OTP sent to your phone">
+                            <div class="resend-otp">
+                                <span class="timer">Resend in <span id="userRegTimer">30</span>s</span>
+                                <a href="#" id="userRegResendOtp" class="disabled">Resend OTP</a>
+                            </div>
+                        </div>
+                        <button type="button" id="userRegSendOtp" class="btn btn-primary btn-block">Send OTP</button>
+                        <button type="submit" id="userRegisterBtn" class="btn btn-primary btn-block hidden">Register</button>
+                    </form>
+                </div>
+                <div class="tab-content" id="worker-register">
+                    <form id="workerRegisterForm">
+                        <div class="form-group">
+                            <label for="workerName">Full Name</label>
+                            <input type="text" id="workerName" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="workerRegPhone">Phone Number</label>
+                            <input type="tel" id="workerRegPhone" placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="workerEmail">Email Address</label>
+                            <input type="email" id="workerEmail" placeholder="Enter your email address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="workerService">Primary Service</label>
+                            <select id="workerService" required>
+                                <option value="">Select a service</option>
+                                <option value="electrician">Electrician</option>
+                                <option value="plumber">Plumber</option>
+                                <option value="carpenter">Carpenter</option>
+                                <option value="painter">Painter</option>
+                                <option value="cleaner">Cleaner</option>
+                                <option value="mover">Mover</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="workerAadhar">Aadhaar Number</label>
+                            <input type="text" id="workerAadhar" placeholder="Enter your 12-digit Aadhaar number" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Upload Aadhaar Card</label>
+                            <div class="file-upload">
+                                <input type="file" id="aadharFile" accept="image/*">
+                                <label for="aadharFile">
+                                    <i class="fas fa-upload"></i>
+                                    <span>Choose File</span>
+                                </label>
+                                <span class="file-name">No file chosen</span>
+                            </div>
+                        </div>
+                        <div class="form-group otp-group hidden">
+                            <label for="workerRegOtp">Enter OTP</label>
+                            <input type="text" id="workerRegOtp" placeholder="Enter the OTP sent to your phone">
+                            <div class="resend-otp">
+                                <span class="timer">Resend in <span id="workerRegTimer">30</span>s</span>
+                                <a href="#" id="workerRegResendOtp" class="disabled">Resend OTP</a>
+                            </div>
+                        </div>
+                        <button type="button" id="workerRegSendOtp" class="btn btn-primary btn-block">Send OTP</button>
+                        <button type="submit" id="workerRegisterBtn" class="btn btn-primary btn-block hidden">Register</button>
+                    </form>
+                </div>
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" id="switchToLogin">Login Here</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>WorkNest</h3>
+                    <p>Connecting verified workers with users for quality service.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>For Workers</h3>
+                    <ul>
+                        <li><a href="#">Join as Worker</a></li>
+                        <li><a href="#">Worker Guidelines</a></li>
+                        <li><a href="#">Safety Tips</a></li>
+                        <li><a href="#">Earnings & Payments</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Main Street, New Delhi, India</li>
+                        <li><i class="fas fa-phone"></i> +91 1234567890</li>
+                        <li><i class="fas fa-envelope"></i> support@worknest.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 WorkNest. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
