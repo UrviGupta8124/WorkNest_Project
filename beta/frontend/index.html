@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="scripts.js"></script>
 </head>
+
 <body>
     <div class="app-container">
         <!-- Navigation Bar -->
@@ -17,15 +19,17 @@
                 <h1>WorkNest</h1>
             </div>
             <div class="nav-links">
-                <a href="#" class="active">Home</a>
-                <a href="#">Services</a>
-                <a href="#">How it Works</a>
-                <a href="#">About Us</a>
-                <a href="#">Contact</a>
+                <a href="#home" class="active">Home</a>
+                <a href="#services">Services</a>
+                <a href="#work">How it Works</a>
+                <a href="bid/bid.html">Bidding</a>
+                <a href="about us\about_us.html">About Us</a>
+                <a href="contact\contact.html">Contact</a>
             </div>
             <div class="auth-buttons">
-                <button id="loginBtn" class="btn btn-outline">Login</button>
-                <button id="registerBtn" class="btn btn-primary">Register</button>
+                <a href="loginpage\login.html">
+                <button id="loginBtn" class="btn btn-outline">Login</button></a>
+                <button id="registerBtn" class="btn btn-primary">Register </button>
             </div>
             <div class="hamburger">
                 <span></span>
@@ -35,8 +39,8 @@
         </nav>
 
         <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
+        <section class="hero" >
+            <div class="hero-content" id="'home">
                 <h1>Find Verified Workers Near You</h1>
                 <p>Connect with skilled professionals for all your needs - household repairs, plumbing, electrical work, cleaning, and more!</p>
                 <div class="search-box">
@@ -49,16 +53,35 @@
                         <input type="text" id="locationInput" placeholder="Your location">
                         <button id="detectLocation"><i class="fas fa-crosshairs"></i></button>
                     </div>
-                    <button class="search-btn btn btn-primary">Find Workers</button>
+                    <a href="workerprofile/first.html">
+                    <button class="search-btn btn btn-primary">Find Workers</button></a>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="/api/placeholder/500/300" alt="WorkNest Services">
+                <!--<img src="/api/placeholder/500/300" alt="WorkNest Services"> -->
+                <div class="carousel">
+                    <button class="arrow left">&#10094</button>
+                    <div class="carousel-track">
+                      <div class="carousel-item active">
+                        <img src="images/img1.jpg" alt="WorkNest Services">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="images/img4.jpg" alt="WorkNest Services">
+                      </div>
+                      <div class="carousel-item">
+                        <img src="images/img3.jpg" alt="WorkNest Services">
+                    </div>
+                      <div class="carousel-item">
+                        <img src="images/img2.jpg" alt="WorkNest Services">
+                      </div>
+                    </div>
+                    <button class="arrow right">&#10095</button>
+                  </div>
             </div>
         </section>
 
         <!-- Service Categories -->
-        <section class="service-categories">
+        <section id="services" class="service-categories" >
             <h2>Popular Service Categories</h2>
             <div class="categories-grid">
                 <div class="category-card">
@@ -91,13 +114,18 @@
                     <h3>Moving</h3>
                     <p>Packing and transportation services</p>
                 </div>
+                <div class="category-card">
+                    <div class="category-icon"><i class="fas fa-gavel"></i></div>
+                    <h3>Mechanic</h3>
+                    <p>Availability in remote , urban, semi-urban or rural areas at any time</p>
+                </div>
             </div>
         </section>
 
         <!-- How It Works -->
-        <section class="how-it-works">
+        <section id="work" class="how-it-works" >
             <h2>How WorkNest Works</h2>
-            <div class="steps-container">
+            <div class="steps-container" >
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-icon"><i class="fas fa-search"></i></div>
@@ -304,9 +332,12 @@
 
         <!-- Modal Templates -->
         <!-- Login Modal -->
+        <!-- 
         <div id="loginModal" class="modal">
             <div class="modal-content">
                 <span class="close-modal">&times;</span>
+                <a href="C:\Users\Shreya\frontend\loginpage\login.html" ></a>
+                
                 <h2>Login to WorkNest</h2>
                 <div class="tabs">
                     <div class="tab active" data-tab="user-login">User Login</div>
@@ -351,18 +382,23 @@
                 <div class="auth-footer">
                     <p>Don't have an account? <a href="#" id="switchToRegister">Register Now</a></p>
                 </div>
+            
             </div>
         </div>
+    -->
 
         <!-- Register Modal -->
+        <!-- 
         <div id="registerModal" class="modal">
             <div class="modal-content">
                 <span class="close-modal">&times;</span>
                 <h2>Register with WorkNest</h2>
                 <div class="tabs">
-                    <div class="tab active" data-tab="user-register">User Registration</div>
-                    <div class="tab" data-tab="worker-register">Worker Registration</div>
+
+                    <div class="tab active" data-tab="user-register"><a href='register\user.html'><button style="color:rgb(53, 53, 207)">User Registration</button></a></div><br>
+                    <div class="tab" data-tab="worker-register"><a href='register\worker.html' ><button style="color:rgb(53,53,207)">Worker Registration</button></a></div>
                 </div>
+                    
                 <div class="tab-content active" id="user-register">
                     <form id="userRegisterForm">
                         <div class="form-group">
@@ -447,7 +483,18 @@
                 </div>
             </div>
         </div>
-
+    -->
+        <!---->
+        <!-- Registration pop up-->
+        <!-- Registration Popup -->
+         <div id="registerPopup" class="popup-overlay" style="display: none;">
+            <div class="popup">
+                <span class="close" onclick="closePopup()"></span>
+                <h2>Register As</h2>
+                <button onclick="window.location.href='register/user.html'">User</button>
+                <button onclick="window.location.href='register/worker.html'">Worker</button>
+            </div>
+    </div> 
         <!-- Footer -->
         <footer>
             <div class="footer-content">
@@ -464,11 +511,11 @@
                 <div class="footer-section">
                     <h3>Quick Links</h3>
                     <ul>
-                        <li><a href="#">Home</a></li>
+                        <li><a href="#home">Home</a></li>
                         <li><a href="#">About Us</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">How It Works</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#service-categories">Services</a></li>
+                        <li><a href="#working">How It Works</a></li>
+                        <li><a href="#footer-section">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="footer-section">

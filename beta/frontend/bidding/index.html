@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Post a Job</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Post a Job</h2>
+    <form id="jobForm">
+        <hr />
+        <h2>Place a Bid</h2>
+        <form id="bidForm">
+          <input type="text" id="jobId" placeholder="Job ID" required />
+          <input type="text" id="workerId" placeholder="Your Worker ID" required />
+          <input type="number" id="bidAmount" placeholder="Your Bid Amount (₹)" required />
+          <button type="submit">Place Bid</button>
+        </form>
+        <p id="bidStatusMsg"></p> 
+
+        <hr />
+<h2>Available Jobs</h2>
+<button onclick="fetchJobs()">Refresh Jobs</button>
+<ul id="jobList"></ul>
+
+<hr />
+<h2>Live Bids (for a Job)</h2>
+<input type="text" id="bidJobId" placeholder="Enter Job ID to see bids" />
+<button onclick="fetchBids()">View Bids</button>
+<ul id="bidList"></ul>
+
+      <input type="text" id="category" placeholder="Job Category" required />
+      <textarea id="description" placeholder="Job Description" required></textarea>
+      <input type="number" id="budget" placeholder="Budget (₹)" required />
+      <input type="text" id="location" placeholder="Location" required />
+      <input type="text" id="userId" placeholder="Your User ID" required />
+      <button type="submit">Submit Job</button>
+    </form>
+    <p id="statusMsg"></p>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

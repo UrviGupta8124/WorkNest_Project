@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Registration</title>
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white; /* Keeps the page background white */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Button Styling */
+        #openPopup {
+            padding: 10px 20px;
+            background-color: #007bff; /* Blue color */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 20px;
+            display: block;
+            width: 200px;
+            text-align: center;
+        }
+
+        #openPopup:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        /* Popup Styling */
+        .popup {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Center the popup */
+            width: 300px;
+            background-color: rgba(0, 0, 0, 0.7); /* Black background with transparency */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+            opacity: 0; /* Start with invisible popup */
+            transition: opacity 0.5s ease-in-out; /* Smooth fade-in and fade-out */
+        }
+
+        /* When popup is shown */
+        .popup.show {
+            display: block;
+            opacity: 1; /* Fully visible */
+        }
+
+        /* Popup Content Styling */
+        .popupContent {
+            background-color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        /* Button inside Popup */
+        .popup button {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #007bff; /* Blue color */
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .popup button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <button id="openPopup">Register</button>
+
+    <!-- Register Popup -->
+    <div id="registerPopup" class="popup">
+        <div class="popupContent">
+            <button id="registerUser">Register as User</button>
+            <button id="registerWorker">Register as Worker</button>
+            <button type="button" id="closePopup">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Show popup when clicking the "Register" button
+        document.getElementById("openPopup").onclick = function() {
+            document.getElementById("registerPopup").classList.add("show");
+        };
+
+        // Close popup when clicking the "Close" button
+        document.getElementById("closePopup").onclick = function() {
+            document.getElementById("registerPopup").classList.remove("show");
+        };
+
+        // Register as User button action
+        document.getElementById("registerUser").onclick = function() {
+            alert("Registering as User!");
+            document.getElementById("registerPopup").classList.remove("show");
+        };
+
+        // Register as Worker button action
+        document.getElementById("registerWorker").onclick = function() {
+            alert("Registering as Worker!");
+            document.getElementById("registerPopup").classList.remove("show");
+        };
+    </script>
+
+</body>
+</html>

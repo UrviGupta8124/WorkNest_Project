@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nearby Workers</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+      position: relative;
+      z-index: 0;
+    }
+
+    /* Background image and transparent overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('bglogin.png') no-repeat center center fixed;
+      background-size: cover;
+      opacity: 0.4; /* Adjust this for transparency */
+      z-index: -1;
+    }
+
+    h1 {
+      text-align: center;
+      color: #4a2323;
+      font-size: 36px;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    .worker-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding-top: 10px;
+    }
+
+    .worker-card {
+      background: rgba(255, 251, 251, 0.85);
+      border-radius: 12px;
+      padding: 20px;
+      width: 320px;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .worker-card:hover {
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+      border-color: #9b59b6;
+    }
+
+    .worker-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #262d34;
+      margin-bottom: 8px;
+    }
+
+    .worker-detail {
+      font-size: 0.95em;
+      color: #555;
+      margin: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .worker-detail span {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .hire-btn {
+      background-color: #633e2d;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      margin-top: 15px;
+      transition: background-color 0.3s ease;
+    }
+
+    .hire-btn:hover {
+      background-color: #8e44ad;
+    }
+  </style>
+</head>
+<body>
+  <h1>Available Local Workers</h1>
+  <div class="worker-container" id="workerContainer"></div>
+
+  <script>
+    const workers = [
+      { name: "Mohit Singh", skill: "Plumber", experience: "7 years", rating: "5.0/5", location: "Delhi", shop: "Singh Pipes & Fittings" },
+      { name: "Manish Deshmukh", skill: "Painter", experience: "3 years", rating: "4.3/5", location: "Delhi", shop: "Deshmukh Contractors" },
+      { name: "Mohit Mehta", skill: "Mason", experience: "10 years", rating: "4.8/5", location: "Delhi", shop: "Mehta Labour Services" },
+      { name: "Mohit Kumar", skill: "General Labour", experience: "4 years", rating: "4.5/5", location: "Delhi", shop: "Kumar Pipes & Fittings" },
+      { name: "Deepak Chauhan", skill: "Mason", experience: "9 years", rating: "4.5/5", location: "Delhi", shop: "Chauhan Electricals" },
+      { name: "Rajeev Patel", skill: "Mason", experience: "1 year", rating: "4.5/5", location: "Delhi", shop: "Patel Electrics" },
+      { name: "Deepak Chauhan", skill: "Painter", experience: "8 years", rating: "4.1/5", location: "Delhi", shop: "Chauhan Contractors" },
+      { name: "Anil Patel", skill: "Electrician", experience: "2 years", rating: "4.0/5", location: "Delhi", shop: "Patel Pipes & Fittings" },
+      { name: "Anil Raj", skill: "Carpenter", experience: "3 years", rating: "3.6/5", location: "Delhi", shop: "Raj Furniture Mart" },
+      { name: "Anil Mehta", skill: "Carpenter", experience: "8 years", rating: "3.6/5", location: "Delhi", shop: "Mehta Services" },
+      { name: "Ravi Kumar", skill: "Welder", experience: "6 years", rating: "4.2/5", location: "Delhi", shop: "Kumar Contractors" },
+      { name: "Suresh Singh", skill: "Painter", experience: "5 years", rating: "4.6/5", location: "Delhi", shop: "Singh Services" },
+      { name: "Rahul Yadav", skill: "Electrician", experience: "3 years", rating: "4.0/5", location: "Delhi", shop: "Yadav Electricals" },
+      { name: "Amit Sharma", skill: "Carpenter", experience: "7 years", rating: "4.7/5", location: "Delhi", shop: "Sharma Wood Works" },
+      { name: "Vikram Chauhan", skill: "General Labour", experience: "2 years", rating: "4.1/5", location: "Delhi", shop: "Chauhan Labour Services" }
+    ];
+
+    const container = document.getElementById("workerContainer");
+    workers.forEach(w => {
+      const card = document.createElement("div");
+      card.className = "worker-card";
+      card.innerHTML = `
+        <div class="worker-name">${w.name}</div>
+        <div class="worker-detail">🛠 <span>${w.skill}</span></div>
+        <div class="worker-detail">💼 <span>${w.experience}</span></div>
+        <div class="worker-detail">⭐ <span>${w.rating}</span></div>
+        <div class="worker-detail">📍 <span>${w.location}</span></div>
+        <div class="worker-detail">🏪 <span>${w.shop}</span></div>
+        <button class="hire-btn">Hire Now</button>
+      `;
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>

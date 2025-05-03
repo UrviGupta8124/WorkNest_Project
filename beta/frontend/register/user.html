@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register as User</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: #f7f9fc;
+      padding: 20px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .left {
+      background: #cce4f7;
+      color: #333;
+      flex: 1;
+      padding: 40px 40px 40px 60px;
+      min-width: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .left img {
+      width: 180px;
+      margin-bottom: 20px;
+    }
+    .left h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+    .left ul {
+      list-style: none;
+      text-align: left;
+    }
+    .left ul li {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+    .left ul li::before {
+      content: '✔';
+      color: #36a32f;
+      margin-right: 10px;
+    }
+    .right {
+      flex: 1;
+      padding: 40px;
+      min-width: 300px;
+    }
+    .right h2 {
+      margin-bottom: 20px;
+      color: #485766;
+      font-size: 32px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+      color: #242121;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #f7f7f7;
+    }
+    .form-group input[type="file"] {
+      padding: 5px;
+    }
+    .checkbox {
+      margin: 10px 0;
+      color: #333;
+    }
+    .btn {
+      background: #1d659d;
+      color: #fff;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .otp-section {
+      display: none;
+      margin-top: 10px;
+    }
+    .otp-status {
+      font-size: 13px;
+      margin-top: 5px;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+    @media (max-width: 768px) {
+      .left, .right {
+        padding: 20px;
+      }
+      .left {
+        align-items: flex-start;
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left">
+      <img src="insan.png" alt="Logo" />
+      <h2>Benefits of Registering:</h2>
+      <ul>
+        <li>Location Based Suggestions.</li>
+        <li>Securing Booking and Payments.</li>
+        <li>Rating and Reviews.</li>
+        <li>Service History.</li>
+        <li>Trusted Users.</li>
+      </ul>
+    </div>
+    <div class="right">
+      <h2>Register as User</h2>
+      <form id="workerForm">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" required />
+        </div>
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input type="tel" id="mobile" pattern="^\+91\d{10}$" placeholder="+91XXXXXXXXXX" required />
+          <button type="button" class="btn" style="margin-top:10px;" onclick="sendOTP()">Send OTP</button>
+          <div class="otp-section" id="otpSection">
+            <label>Enter OTP</label>
+            <input type="text" id="otpInput" maxlength="6" />
+            <button type="button" class="btn" style="margin-top:10px;" onclick="verifyOTP()">Verify OTP</button>
+            <p id="otpStatus" class="otp-status"></p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" required />
+        </div>
+        <div class="form-group">
+          <label>Address</label>
+          <input type="text" id="addressField" placeholder="Enter your address" required />
+          <small style="color: gray;">*Your current location will be auto-filled if allowed.</small>
+        </div>
+        <div class="form-group">
+          <label>Aadhaar Number</label>
+          <input type="text" pattern="\d{12}" placeholder="12-digit Aadhaar Number" required />
+        </div>
+        <div class="form-group">
+          <label>Set Password</label>
+          <input type="password" required />
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" required />
+            I agree to the <a href="#">Terms</a> & <a href="#">Privacy Policy</a>
+          </label>
+        </div>
+        <button type="submit" class="btn">Register Now</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let generatedOTP = "";
+    let otpVerified = false;
+
+    function sendOTP() {
+      const mobile = document.getElementById("mobile").value;
+      if (!/^\+91\d{10}$/.test(mobile)) {
+        alert("Enter valid mobile number in +91 format.");
+        return;
+      }
+      generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
+      console.log("Simulated OTP:", generatedOTP);
+      document.getElementById("otpSection").style.display = "block";
+      document.getElementById("otpStatus").textContent = "OTP sent (check console)";
+      document.getElementById("otpStatus").className = "otp-status";
+    }
+
+    function verifyOTP() {
+      const inputOTP = document.getElementById("otpInput").value;
+      const status = document.getElementById("otpStatus");
+      if (inputOTP === generatedOTP) {
+        otpVerified = true;
+        status.textContent = "✅ OTP verified successfully!";
+        status.className = "otp-status success";
+      } else {
+        otpVerified = false;
+        status.textContent = "❌ Incorrect OTP.";
+        status.className = "otp-status error";
+      }
+    }
+
+    document.getElementById("workerForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!otpVerified) {
+        alert("Please verify OTP before registering.");
+        return;
+      }
+      alert("User registration successful!");
+      this.reset();
+      document.getElementById("otpSection").style.display = "none";
+      otpVerified = false;
+    });
+
+    // Auto-fill address with user's current location
+    window.onload = function () {
+      const addressField = document.getElementById("addressField");
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async function (position) {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const url = "https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json";
+
+          try {
+            const response = await fetch(url);
+            const data = await response.json();
+            if (data && data.display_name) {
+              addressField.value = data.display_name;
+            } else {
+              addressField.value = "Unable to detect address.";
+            }
+          } catch (error) {
+            console.error("Error fetching location:", error);
+            addressField.value = "Location fetch failed.";
+          }
+        }, function (error) {
+          console.warn("Geolocation permission denied or unavailable.");
+        });
+      } else {
+        addressField.value = "Geolocation not supported by browser.";
+      }
+    };
+  </script>
+</body>
+</html>

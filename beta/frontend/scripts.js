@@ -4,6 +4,51 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
+
+// Carousel functionality
+document.addEventListener('DOMContentLoaded', () => {
+    const items = document.querySelectorAll('.carousel-item');
+    const leftBtn = document.querySelector('.arrow.left');
+    const rightBtn = document.querySelector('.arrow.right');
+    let current = 0;
+  
+    function setActive(index) {
+      items.forEach((item, i) => {
+        item.classList.remove('active');
+        if (i === index) item.classList.add('active');
+      });
+      current = index;
+    }
+  
+    // Auto-slide
+    setInterval(() => {
+      const next = (current + 1) % items.length;
+      setActive(next);
+    }, 3000);
+  
+    // Click to activate
+    items.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        setActive(index);
+      });
+    });
+  
+    // Arrow button handlers
+    if (leftBtn && rightBtn) {
+      leftBtn.addEventListener('click', () => {
+        const prev = (current - 1 + items.length) % items.length;
+        setActive(prev);
+      });
+  
+      rightBtn.addEventListener('click', () => {
+        const next = (current + 1) % items.length;
+        setActive(next);
+      });
+    }
+  });
+
+
+
 function initializeApp() {
     // Setup event listeners
     setupNavigation();
@@ -202,6 +247,16 @@ function setupLocationDetection() {
         });
     }
 }
+//when register bbutton is clicked
+// When Register button is clicked
+document.getElementById("registerBtn").addEventListener("click", function(e) {
+    e.preventDefault();
+    document.getElementById("registerPopup").style.display = "flex";
+  });
+  
+  function closePopup() {
+    document.getElementById("registerPopup").style.display = "none";
+  }
 
 // Reverse Geocoding (convert coordinates to address)
 async function reverseGeocode(latitude, longitude) {
@@ -458,18 +513,23 @@ function setupOtpFunctionality() {
             showToast("OTP sent to your phone", "success");
         });
     }
+}
+    /*
     
     // Worker registration OTP
     const workerRegSendOtp = document.getElementById('workerRegSendOtp');
     if (workerRegSendOtp) {
-        workerRegSendOtp.addEventListener('click', function() {
+        workerRegSendOtp.addEventListener('click', function()) {
             const phone = document.getElementById('workerRegPhone').value;
             
             if (!validatePhone(phone)) {
                 showToast("Please enter a valid phone number", "error");
                 return;
             }
+        }
             
             // Show OTP input and register button
            // document.querySelector('#workerRegisterForm .otp-group').classList.remove('hidden');
            // document.getElementById('workerRegisterBtn').classList.remove('hidden
+    }
+}*/

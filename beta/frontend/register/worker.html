@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Registration Portal</title>
+    <style>
+        :root {
+            --primary-color: #065183;
+            --secondary-color: #2ecc71;
+            --background-color: #f9f9f9;
+            --text-color: #333;
+            --border-color: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .registration-options {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+        }
+
+        .option-card {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            width: 45%;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .option-card.active {
+            border: 2px solid var(--primary-color);
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+
+        .form-container {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-group input, .input-group select {
+            flex: 1;
+        }
+
+        .otp-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .otp-container input {
+            flex: 1;
+        }
+
+        .otp-container button {
+            padding: 10px 15px;
+            white-space: nowrap;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .submit-btn {
+            background-color: var(--secondary-color);
+            margin-top: 20px;
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+        }
+
+        .submit-btn:hover {
+            background-color: #27ae60;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .radio-option input, .checkbox-option input {
+            width: auto;
+        }
+
+        .file-upload {
+            background-color: #f1f1f1;
+            border: 1px dashed #999;
+            padding: 20px;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .file-upload:hover {
+            background-color: #e9e9e9;
+        }
+
+        .multi-select {
+            padding: 10px;
+            height: 120px;
+        }
+
+        .terms {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .required::after {
+            content: " *";
+            color: red;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Worker Registration Portal</h1>
+        
+        <div class="section">
+            <h2>Registration Type</h2>
+            <div class="registration-options">
+                <div class="option-card" id="individual-option" onclick="selectOption('individual')">
+                    <h3>Individual Worker</h3>
+                    <p>Register yourself as an individual worker</p>
+                </div>
+                <div class="option-card" id="business-option" onclick="selectOption('business')">
+                    <h3>Local Business / Agency</h3>
+                    <p>Register your business and connect your workers with us</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Individual Worker Registration Form -->
+        <div class="form-container" id="individual-form">
+            <h2>Individual Worker Registration</h2>
+            <form id="individual-worker-form">
+                <!-- Personal Information -->
+                <div class="section">
+                    <h3>Personal Information</h3>
+                    
+                    <div class="form-group">
+                        <label class="required">Full Name</label>
+                        <input type="text" name="fullName" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Mobile Number</label>
+                        <div class="otp-container">
+                            <input type="tel" name="mobileNumber" placeholder="Enter your mobile number" required>
+                            <button type="button" onclick="sendOTP()">Send OTP</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="otp-verification" style="display: none;">
+                        <label class="required">Enter OTP</label>
+                        <div class="otp-container">
+                            <input type="text" name="otp" placeholder="Enter OTP received on your mobile">
+                            <button type="button" onclick="verifyOTP()">Verify OTP</button>
+                        </div>
+                        <div id="otp-message"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Date of Birth</label>
+                        <input type="date" name="dob" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Gender</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" name="gender" id="male" value="male" required>
+                                <label for="male">Male</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" name="gender" id="female" value="female">
+                                <label for="female">Female</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" name="gender" id="other" value="other">
+                                <label for="other">Other</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Current Address</label>
+                        <textarea name="address" rows="3" placeholder="Enter your current address" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Email Address</label>
+                        <input type="email" name="email" placeholder="Enter your email address" required>
+                    </div>
+                </div>
+                
+                <!-- ID Verification -->
+                <div class="section">
+                    <h3>ID Verification</h3>
+                    
+                    <div class="form-group">
+                        <label class="required">Aadhaar Number</label>
+                        <input type="text" name="aadhaarNumber" placeholder="Enter your 12-digit Aadhaar number" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Upload Aadhaar Card</label>
+                        <div class="file-upload" onclick="document.getElementById('aadhaarFile').click()">
+                            <p>Click to upload your Aadhaar card image (front and back)</p>
+                            <input type="file" id="aadhaarFile" name="aadhaarFile" style="display: none;" accept="image/*" onchange="updateFileName(this)" required>
+                            <p id="aadhaarFileName">No file chosen</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Upload Selfie (should match with Aadhaar photo)</label>
+                        <div class="file-upload" onclick="document.getElementById('selfieFile').click()">
+                            <p>Click to upload your selfie</p>
+                            <input type="file" id="selfieFile" name="selfieFile" style="display: none;" accept="image/*" onchange="updateFileName(this)" required>
+                            <p id="selfieFileName">No file chosen</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Skills & Preferences -->
+                <div class="section">
+                    <h3>Skills & Preferences</h3>
+                    
+                    <div class="form-group">
+                        <label class="required">Languages Spoken</label>
+                        <select multiple class="multi-select" name="languages" required>
+                            <option value="hindi">Hindi</option>
+                            <option value="english">English</option>
+                            <option value="punjabi">Punjabi</option>
+                            <option value="tamil">Tamil</option>
+                            <option value="telugu">Telugu</option>
+                            <option value="bengali">Bengali</option>
+                            <option value="marathi">Marathi</option>
+                            <option value="gujarati">Gujarati</option>
+                            <option value="kannada">Kannada</option>
+                            <option value="malayalam">Malayalam</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <small>Hold Ctrl (or Cmd on Mac) to select multiple languages</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Job Preferences</label>
+                        <select multiple class="multi-select" name="jobPreferences" required>
+                            <option value="electrician">Electrician</option>
+                            <option value="carpenter">Carpenter</option>
+                            <option value="plumber">Plumber</option>
+                            <option value="construction">Construction Labor</option>
+                            <option value="painter">Painter</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <small>Hold Ctrl (or Cmd on Mac) to select multiple job types</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Availability</label>
+                        <select name="availability" required>
+                            <option value="">Select your availability</option>
+                            <option value="fulltime">Full-time</option>
+                            <option value="parttime">Part-time</option>
+                            <option value="weekends">Weekends only</option>
+                            <option value="flexible">Flexible hours</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Upload Demo Videos of Your Work</label>
+                        <div class="file-upload" onclick="document.getElementById('demoVideos').click()">
+                            <p>Click to upload short demo videos of your work</p>
+                            <input type="file" id="demoVideos" name="demoVideos" style="display: none;" accept="video/*" multiple onchange="updateFileName(this)" required>
+                            <p id="demoVideosName">No files chosen</p>
+                        </div>
+                        <small>You can select multiple videos (max 3 videos, each less than 50MB)</small>
+                    </div>
+                </div>
+                
+                <!-- Police Verification -->
+                <div class="section">
+                    <h3>Police Verification</h3>
+                    
+                    <div class="form-group">
+                        <label class="required">Police Verification Status</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" name="policeVerification" id="pv-yes" value="yes" required>
+                                <label for="pv-yes">Yes (I have police verification)</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" name="policeVerification" id="pv-no" value="no">
+                                <label for="pv-no">No</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" name="policeVerification" id="pv-process" value="in-process">
+                                <label for="pv-process">In Process</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="pv-document-section" style="display: none;">
+                        <label class="required">Upload Police Verification Document</label>
+                        <div class="file-upload" onclick="document.getElementById('pvDocument').click()">
+                            <p>Click to upload police verification document</p>
+                            <input type="file" id="pvDocument" name="pvDocument" style="display: none;" accept="image/*,application/pdf" onchange="updateFileName(this)">
+                            <p id="pvDocumentName">No file chosen</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="pv-number-section" style="display: none;">
+                        <label>Police Verification Number (if available)</label>
+                        <input type="text" name="pvNumber" placeholder="Enter your police verification number">
+                    </div>
+                </div>
+                
+                <!-- Security & Password -->
+                <div class="section">
+                    <h3>Security</h3>
+                    
+                    <div class="form-group">
+                        <label class="required">Set Password</label>
+                        <input type="password" name="password" placeholder="Create a strong password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Confirm Password</label>
+                        <input type="password" name="confirmPassword" placeholder="Confirm your password" required>
+                    </div>
+                </div>
+                
+                <!-- Terms and Conditions -->
+                <div class="section">
+                    <div class="terms">
+                        <h4>Terms and Conditions</h4>
+                        <p>By registering, you agree to our terms and conditions including but not limited to:</p>
+                        <ul>
+                            <li>Consent to verify all provided information</li>
+                            <li>Adherence to our code of conduct and service standards</li>
+                            <li>Acceptance of our payment terms and commission structure</li>
+                            <li>Consent to share your professional details with potential clients</li>
+                            <li>Commitment to maintain updated contact information</li>
+                        </ul>
+                        <p>For full terms and conditions, <a href="#">click here</a>.</p>
+                    </div>
+                    
+                    <div class="form-group checkbox-option">
+                        <input type="checkbox" id="terms-individual" name="termsAccepted" required>
+                        <label for="terms-individual" class="required">I have read and agree to the Terms and Conditions</label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">Register as Individual Worker</button>
+            </form>
+        </div>
+
+        <!-- Business Registration Form -->
+        <div class="form-container" id="business-form">
+            <h2>Business Registration</h2>
+            <form id="business-registration-form">
+                <!-- Business Information -->
+                <div class="section">
+                    <h3>Business Information</h3>
+                    
+                    <div class="form-group">
+                        <label class="required">Business Name</label>
+                        <input type="text" name="businessName" placeholder="Enter your business name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Owner's Full Name</label>
+                        <input type="text" name="ownerName" placeholder="Enter owner's full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Business Type</label>
+                        <select name="businessType" required>
+                            <option value="">Select business type</option>
+                            <option value="sole-proprietorship">Sole Proprietorship</option>
+                            <option value="partnership">Partnership</option>
+                            <option value="private-limited">Private Limited Company</option>
+                            <option value="cooperative">Cooperative</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Year Established</label>
+                        <input type="number" name="yearEstablished" placeholder="Year the business was established" min="1900" max="2025" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Number of Workers Provided</label>
+                        <input type="number" name="workerCount" placeholder="Number of workers you can provide" min="1" required>
+                    </div>
+                </div>
+                
+                <!-- Contact Details -->
+                <div class="section">
+                    <h3>Contact Details</h3>
+                    
+                    <div class="form-group">
+                        <label class="required">Phone Number</label>
+                        <div class="otp-container">
+                            <input type="tel" name="businessPhone" placeholder="Enter business phone number" required>
+                            <button type="button" onclick="sendBusinessOTP()">Send OTP</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="business-otp-verification" style="display: none;">
+                        <label class="required">Enter OTP</label>
+                        <div class="otp-container">
+                            <input type="text" name="businessOtp" placeholder="Enter OTP received on your phone">
+                            <button type="button" onclick="verifyBusinessOTP()">Verify OTP</button>
+                        </div>
+                        <div id="business-otp-message"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Email ID</label>
+                        <input type="email" name="businessEmail" placeholder="Enter business email address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Business Address</label>
+                        <textarea name="businessAddress" rows="3" placeholder="Enter complete business address" required></textarea>
+                    </div>
+                    
+                    <div class="input-group">
+                        <div class="form-group">
+                            <label class="required">City/Locality</label>
+                            <input type="text" name="businessCity" placeholder="City/Locality" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required">PIN Code</label>
+                            <input type="text" name="businessPincode" placeholder="PIN Code" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Google Map Location</label>
+                        <input type="text" name="mapLocation" placeholder="Share your Google Maps link">
+                        <small>You can get this by searching your business in Google Maps, clicking "Share" and copying the link</small>
+                    </div>
+                </div>
+                
+                <!-- Verification Documents -->
+                <div class="section">
+                    <h3>Official Verification Documents</h3>
+                    
+                    <div class="form-group">
+                        <label class="required">Business Registration Certificate</label>
+                        <div class="file-upload" onclick="document.getElementById('businessCertificate').click()">
+                            <p>Click to upload Business Registration Certificate</p>
+                            <input type="file" id="businessCertificate" name="businessCertificate" style="display: none;" accept="image/*,application/pdf" onchange="updateFileName(this)" required>
+                            <p id="businessCertificateName">No file chosen</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Owner's Aadhaar or PAN Card</label>
+                        <div class="file-upload" onclick="document.getElementById('ownerIdProof').click()">
+                            <p>Click to upload Owner's Aadhaar or PAN Card</p>
+                            <input type="file" id="ownerIdProof" name="ownerIdProof" style="display: none;" accept="image/*" onchange="updateFileName(this)" required>
+                            <p id="ownerIdProofName">No file chosen</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>GST Number (if available)</label>
+                        <input type="text" name="gstNumber" placeholder="Enter GST number if available">
+                    </div>
+                </div>
+                
+                <!-- Bank Details -->
+                <div class="section">
+                    <h3>Bank Details (for future payments)</h3>
+                    
+                    <div class="form-group">
+                        <label class="required">Account Holder Name</label>
+                        <input type="text" name="accountName" placeholder="Enter account holder name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Bank Name</label>
+                        <input type="text" name="bankName" placeholder="Enter bank name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Account Number</label>
+                        <input type="text" name="accountNumber" placeholder="Enter account number" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">IFSC Code</label>
+                        <input type="text" name="ifscCode" placeholder="Enter IFSC code" required>
+                    </div>
+                </div>
+                
+                <!-- Worker Categories -->
+                <div class="section">
+                    <h3>Worker Categories Provided</h3>
+                    
+                    <div class="form-group">
+                        <label class="required">Select Worker Categories</label>
+                        <div class="checkbox-group" style="flex-direction: column; align-items: flex-start;">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="electricians" name="workerCategories" value="electricians">
+                                <label for="electricians">Electricians</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="carpenters" name="workerCategories" value="carpenters">
+                                <label for="carpenters">Carpenters</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="plumbers" name="workerCategories" value="plumbers">
+                                <label for="plumbers">Plumbers</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="construction" name="workerCategories" value="construction">
+                                <label for="construction">Construction Labours</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="painters" name="workerCategories" value="painters">
+                                <label for="painters">Painters</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="other-category" name="workerCategories" value="other">
+                                <label for="other-category">Other</label>
+                                <input type="text" id="other-category-text" name="otherCategory" placeholder="Specify other categories" style="width: 50%; margin-left: 10px; display: none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Worker Identity and Skill Assurance -->
+                <div class="section">
+                    <h3>Worker Identity and Skill Assurance</h3>
+                    
+                    <div class="form-group">
+                        <label class="required">Upload Sample Worker KYC (Aadhaar + Photo)</label>
+                        <div class="file-upload" onclick="document.getElementById('sampleKyc').click()">
+                            <p>Click to upload sample worker KYC documents</p>
+                            <input type="file" id="sampleKyc" name="sampleKyc" style="display: none;" accept="image/*,application/pdf" onchange="updateFileName(this)" required>
+                            <p id="sampleKycName">No file chosen</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Skill Proof</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" name="skillProofType" id="demo-videos" value="videos" required>
+                                <label for="demo-videos">Demo Videos</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" name="skillProofType" id="certificates" value="certificates">
+                                <label for="certificates">Certificates</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="demo-videos-section" style="display: none;">
+                        <label>Upload Demo Videos</label>
+                        <div class="file-upload" onclick="document.getElementById('demoVideosB').click()">
+                            <p>Click to upload demo videos of workers' skills</p>
+                            <input type="file" id="demoVideosB" name="demoVideosB" style="display: none;" accept="video/*" multiple onchange="updateFileName(this)">
+                            <p id="demoVideosBName">No files chosen</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group" id="certificates-section" style="display: none;">
+                        <label>Upload Certificates</label>
+                        <div class="file-upload" onclick="document.getElementById('certificates-file').click()">
+                            <p>Click to upload skill certificates</p>
+                            <input type="file" id="certificates-file" name="certificatesFile" style="display: none;" accept="image/*,application/pdf" multiple onchange="updateFileName(this)">
+                            <p id="certificates-fileName">No files chosen</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="required">Worker Training Source</label>
+                        <select name="trainingSource" required>
+                            <option value="">Select training source</option>
+                            <option value="self-taught">Self-taught</option>
+                            <option value="institute">Trained at institute</option>
+                            <option value="apprenticeship">Apprenticeship</option>
+                            <option value="family-business">Family business</option>
+                            <option value="on-job">On-job training</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Terms and Conditions -->
+                <div class="section">
+                    <div class="terms">
+                        <h4>Consent and Accountability</h4>
+                        <p>By registering, you agree to our terms and conditions including but not limited to:</p>
+                        <ul>
+                            <li>Responsibility for ensuring all workers comply with our service standards and code of conduct</li>
+                            <li>Consent to verify all provided business and worker information</li>
+                            <li>Acceptance of our commission structure and payment terms</li>
+                            <li>Commitment to maintain quality of service through your workers</li>
+                            <li>Understanding that payment will be made to your business after successful completion of assignments and after deduction of agreed commission</li>
+                        </ul>
+                        <p>For full terms and conditions, <a href="t&c(worker).html">click here</a>.</p>
+                    </div>
+                    
+                    <div class="form-group checkbox-option">
+                        <input type="checkbox" id="terms-business" name="termsAccepted" required>
+                        <label for="terms-business" class="required">I have read and agree to the Terms and Conditions</label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">Register Business</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    // Form selection and display functionality
+    function selectOption(type) {
+        // Reset active state
+        document.getElementById('individual-option').classList.remove('active');
+        document.getElementById('business-option').classList.remove('active');
+        document.getElementById('individual-form').classList.remove('active');
+        document.getElementById('business-form').classList.remove('active');
+        
+        // Set active state
+        document.getElementById(type + '-option').classList.add('active');
+        document.getElementById(type + '-form').classList.add('active');
+        
+        // Scroll to form
+        document.getElementById(type + '-form').scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+    
+    // OTP verification functionality for individual
+    function sendOTP() {
+        const mobileNumber = document.querySelector('input[name="mobileNumber"]').value;
+        
+        if (!mobileNumber) {
+            alert('Please enter a valid mobile number');
+            return;
+        }
+        
+        // In a real scenario, this would make an API call to send an OTP
+        // For demonstration, we'll just show the OTP verification field
+        document.getElementById('otp-verification').style.display = 'block';
+        document.getElementById('otp-message').innerHTML = '<span style="color: green;">OTP sent successfully to ' + mobileNumber + '</span>';
+        
+        // Scroll to OTP field
+        document.getElementById('otp-verification').scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+    
+    function verifyOTP() {
+        const otp = document.querySelector('input[name="otp"]').value;
+        
+        if (!otp) {
+            alert('Please enter the OTP');
+            return;
+        }
+        
+        // In a real scenario, this would verify the OTP with the server
+        // For demonstration, we'll just show a success message
+        document.getElementById('otp-message').innerHTML = '<span style="color: green;">Mobile number verified successfully!</span>';
+    }
+    
+    // OTP verification functionality for business
+    function sendBusinessOTP() {
+        const businessPhone = document.querySelector('input[name="businessPhone"]').value;
+        
+        if (!businessPhone) {
+            alert('Please enter a valid business phone number');
+            return;
+        }
+        
+        // In a real scenario, this would make an API call to send an OTP
+        document.getElementById('business-otp-verification').style.display = 'block';
+        document.getElementById('business-otp-message').innerHTML = '<span style="color: green;">OTP sent successfully to ' + businessPhone + '</span>';
+        
+        // Scroll to OTP field
+        document.getElementById('business-otp-verification').scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+    
+    function verifyBusinessOTP() {
+        const businessOtp = document.querySelector('input[name="businessOtp"]').value;
+        
+        if (!businessOtp) {
+            alert('Please enter the OTP');
+            return;
+        }
+        
+        // In a real scenario, this would verify the OTP with the server
+        document.getElementById('business-otp-message').innerHTML = '<span style="color: green;">Business phone number verified successfully!</span>';
+    }
+    
+    // Update file name display when files are selected
+    function updateFileName(inputElement) {
+        const fileNameElement = document.getElementById(inputElement.id + 'Name');
+        if (inputElement.files.length > 0) {
+            if (inputElement.multiple) {
+                fileNameElement.textContent = `${inputElement.files.length} file(s) selected`;
+            } else {
+                fileNameElement.textContent = inputElement.files[0].name;
+            }
+        } else {
+            fileNameElement.textContent = 'No file chosen';
+        }
+    }
+    
+    // Toggle police verification document upload based on selection
+    document.querySelectorAll('input[name="policeVerification"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const pvDocumentSection = document.getElementById('pv-document-section');
+            const pvNumberSection = document.getElementById('pv-number-section');
+            
+            if (this.value === 'yes') {
+                pvDocumentSection.style.display = 'block';
+                pvNumberSection.style.display = 'block';
+                document.getElementById('pvDocument').required = true;
+            } else if (this.value === 'in-process') {
+                pvDocumentSection.style.display = 'none';
+                pvNumberSection.style.display = 'block';
+                document.getElementById('pvDocument').required = false;
+            } else {
+                pvDocumentSection.style.display = 'none';
+                pvNumberSection.style.display = 'none';
+                document.getElementById('pvDocument').required = false;
+            }
+        });
+    });
+    
+    // Toggle skill proof upload section based on selection
+    document.querySelectorAll('input[name="skillProofType"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const demoVideosSection = document.getElementById('demo-videos-section');
+            const certificatesSection = document.getElementById('certificates-section');
+            
+            if (this.value === 'videos') {
+                demoVideosSection.style.display = 'block';
+                certificatesSection.style.display = 'none';
+                document.getElementById('demoVideosB').required = true;
+                document.getElementById('certificates-file').required = false;
+            } else {
+                demoVideosSection.style.display = 'none';
+                certificatesSection.style.display = 'block';
+                document.getElementById('demoVideosB').required = false;
+                document.getElementById('certificates-file').required = true;
+            }
+        });
+    });
+    
+    // Show/hide other category text field
+    document.getElementById('other-category').addEventListener('change', function() {
+        document.getElementById('other-category-text').style.display = this.checked ? 'inline-block' : 'none';
+    });
+    
+    // Form validation for individual worker
+    document.getElementById('individual-worker-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Password validation
+        const password = document.querySelector('input[name="password"]').value;
+        const confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
+        
+        if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+        
+        // Check if terms are accepted
+        if (!document.getElementById('terms-individual').checked) {
+            alert('You must accept the terms and conditions to register');
+            return;
+        }
+        
+        // In a real scenario, this would submit the form data to the server
+        // For demonstration, we'll show a success message
+        const formContainer = document.getElementById('individual-form');
+        formContainer.innerHTML = `
+            <div class="success-message">
+                <h3>Registration Successful!</h3>
+                <p>Thank you for registering as an individual worker. Your application has been submitted successfully.</p>
+                <p>We will review your details and get back to you soon.</p>
+                <button onclick="window.location.reload()" style="margin-top: 15px;">Register Another Worker</button>
+            </div>
+            
+            <div class="section">
+                <h3>Worker Profile</h3>
+                <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #dee2e6;">
+                    <div style="display: flex; gap: 20px;">
+                        <div style="width: 120px; height: 120px; background-color: #e9ecef; border-radius: 50%; display: flex; justify-content: center; align-items: center;">
+                            <span style="font-size: 40px; color: #adb5bd;">👤</span>
+                        </div>
+                        <div>
+                            <h4 style="margin-top: 0;">${document.querySelector('input[name="fullName"]').value}</h4>
+                            <p><strong>Mobile:</strong> ${document.querySelector('input[name="mobileNumber"]').value}</p>
+                            <p><strong>Email:</strong> ${document.querySelector('input[name="email"]').value}</p>
+                            <p><strong>Gender:</strong> ${document.querySelector('input[name="gender"]:checked').value}</p>
+                            <p><strong>Date of Birth:</strong> ${document.querySelector('input[name="dob"]').value}</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <h5>Skills & Preferences</h5>
+                        <p><strong>Job Preferences:</strong> ${Array.from(document.querySelector('select[name="jobPreferences"]').selectedOptions).map(option => option.text).join(', ')}</p>
+                        <p><strong>Languages:</strong> ${Array.from(document.querySelector('select[name="languages"]').selectedOptions).map(option => option.text).join(', ')}</p>
+                        <p><strong>Availability:</strong> ${document.querySelector('select[name="availability"]').options[document.querySelector('select[name="availability"]').selectedIndex].text}</p>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <h5>Verification Status</h5>
+                        <p><strong>Aadhaar Verification:</strong> <span style="color: green;">✓ Verified</span></p>
+                        <p><strong>Mobile Verification:</strong> <span style="color: green;">✓ Verified</span></p>
+                        <p><strong>Police Verification:</strong> ${document.querySelector('input[name="policeVerification"]:checked').value === 'yes' ? '<span style="color: green;">✓ Verified</span>' : document.querySelector('input[name="policeVerification"]:checked').value === 'in-process' ? '<span style="color: orange;">⟳ In Process</span>' : '<span style="color: red;">✗ Not Available</span>'}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    // Form validation for business registration
+    document.getElementById('business-registration-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Check if categories are selected
+        const categories = document.querySelectorAll('input[name="workerCategories"]:checked');
+        if (categories.length === 0) {
+            alert('Please select at least one worker category');
+            return;
+        }
+        
+        // Check if terms are accepted
+        if (!document.getElementById('terms-business').checked) {
+            alert('You must accept the terms and conditions to register');
+            return;
+        }
+        
+        // In a real scenario, this would submit the form data to the server
+        // For demonstration, we'll show a success message
+        const formContainer = document.getElementById('business-form');
+        formContainer.innerHTML = `
+            <div class="success-message">
+                <h3>Business Registration Successful!</h3>
+                <p>Thank you for registering your business. Your application has been submitted successfully.</p>
+                <p>We will review your details and get back to you soon.</p>
+                <button onclick="window.location.reload()" style="margin-top: 15px;">Register Another Business</button>
+            </div>
+            
+            <div class="section">
+                <h3>Business Profile</h3>
+                <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #dee2e6;">
+                    <div style="display: flex; gap: 20px;">
+                        <div style="width: 120px; height: 120px; background-color: #e9ecef; border-radius: 8px; display: flex; justify-content: center; align-items: center;">
+                            <span style="font-size: 40px; color: #adb5bd;">🏢</span>
+                        </div>
+                        <div>
+                            <h4 style="margin-top: 0;">${document.querySelector('input[name="businessName"]').value}</h4>
+                            <p><strong>Owner:</strong> ${document.querySelector('input[name="ownerName"]').value}</p>
+                            <p><strong>Type:</strong> ${document.querySelector('select[name="businessType"]').options[document.querySelector('select[name="businessType"]').selectedIndex].text}</p>
+                            <p><strong>Year Established:</strong> ${document.querySelector('input[name="yearEstablished"]').value}</p>
+                            <p><strong>Workers Provided:</strong> ${document.querySelector('input[name="workerCount"]').value}</p>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <h5>Contact Information</h5>
+                        <p><strong>Phone:</strong> ${document.querySelector('input[name="businessPhone"]').value}</p>
+                        <p><strong>Email:</strong> ${document.querySelector('input[name="businessEmail"]').value}</p>
+                        <p><strong>Address:</strong> ${document.querySelector('textarea[name="businessAddress"]').value}, ${document.querySelector('input[name="businessCity"]').value}, ${document.querySelector('input[name="businessPincode"]').value}</p>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <h5>Worker Categories</h5>
+                        <p>${Array.from(categories).map(cat => cat.id === 'other-category' ? document.querySelector('input[name="otherCategory"]').value : document.querySelector(`label[for="${cat.id}"]`).textContent).join(', ')}</p>
+                    </div>
+                    
+                    <div style="margin-top: 20px;">
+                        <h5>Verification Status</h5>
+                        <p><strong>Business Registration:</strong> <span style="color: green;">✓ Under Review</span></p>
+                        <p><strong>Phone Verification:</strong> <span style="color: green;">✓ Verified</span></p>
+                        <p><strong>Owner ID Verification:</strong> <span style="color: green;">✓ Under Review</span></p>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+    
+    // Initialize the page with the individual option selected by default
+    window.onload = function() {
+        selectOption('individual');
+    };
+</script>

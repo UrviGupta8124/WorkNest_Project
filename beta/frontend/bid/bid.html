@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkNest - Find Local Workers Fast</title>
+    <style>
+        :root {
+            --primary: #2849c1;
+            --primary-dark: #0a2277;
+            --secondary: #28a745;
+            --secondary-dark: #218838;
+            --danger: #dc3545;
+            --gray-light: #f8f9fa;
+            --gray: #e9ecef;
+            --gray-dark: #6c757d;
+            --dark: #343a40;
+            --white: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-dark);
+            padding: 1rem 0;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: #072162;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #3432bf;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+        }
+
+        .hero {
+            padding: 3rem 0;
+            text-align: center;
+            background: linear-gradient(rgba(42, 79, 214, 0.8), rgba(6, 24, 92, 0.9)), url('/api/placeholder/1200/400') center/cover;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .main-content {
+            padding: 3rem 0;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray);
+            background-color: var(--gray-light);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .job-card {
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background-color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .job-title {
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .job-budget {
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .job-details {
+            margin-bottom: 1rem;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: var(--gray-dark);
+            font-size: 0.9rem;
+        }
+
+        .job-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        form input, form select, form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .bid-card {
+            background-color: white;
+            border: 1px solid var(--gray);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .bid-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .worker-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .worker-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .worker-name {
+            font-weight: 500;
+        }
+
+        .worker-rating {
+            color: #ff9800;
+        }
+
+        .bid-amount {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .bid-message {
+            margin: 0.5rem 0;
+            color: var(--dark);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            border-bottom-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-column ul li a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .job-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">WorkNest</div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Find Jobs</a></li>
+                    <li><a href="#">Post a Job</a></li>
+                    <li><a href="#">How it Works</a></li>
+                    <li><a href="#">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Find Local Workers For Your Jobs</h1>
+            <p>Post your job and get matched with verified local professionals ready to help.</p>
+            <a href="#post-job" class="btn btn-secondary">Post a Job</a>
+        </div>
+    </section>
+
+    <section class="main-content">
+        <div class="container two-column">
+            <div>
+                <div class="card" id="post-job">
+                    <div class="card-header">
+                        <h2>Post a New Job</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="job-form">
+                            <label for="job-title">Job Title</label>
+                            <input type="text" id="job-title" placeholder="e.g. Lawn Mowing Service Needed" required>
+
+                            <label for="job-category">Category</label>
+                            <select id="job-category" required>
+                                <option value="">Select a category</option>
+                                <option value="home-improvement">Home Improvement</option>
+                                <option value="landscaping">Landscaping</option>
+                                <option value="cleaning">Cleaning</option>
+                                <option value="moving">Moving</option>
+                                <option value="electrical">Electrical</option>
+                                <option value="plumbing">Plumbing</option>
+                                <option value="handyman">Handyman</option>
+                                <option value="other">Other</option>
+                            </select>
+
+                            <label for="job-description">Description</label>
+                            <textarea id="job-description" placeholder="Describe your job in detail..." required></textarea>
+
+                            <label for="job-location">Location</label>
+                            <input type="text" id="job-location" placeholder="e.g. 123 Main St, City, State" required>
+
+                            <div style="display: flex; gap: 1rem;">
+                                <div style="flex: 1;">
+                                    <label for="job-budget-min">Minimum Budget ($)</label>
+                                    <input type="number" id="job-budget-min" placeholder="e.g. 50" min="20" required>
+                                </div>
+                                <div style="flex: 1;">
+                                    <label for="job-budget-max">Maximum Budget ($)</label>
+                                    <input type="number" id="job-budget-max" placeholder="e.g. 100" required>
+                                </div>
+                            </div>
+
+                            <label for="job-date">Job Date</label>
+                            <input type="date" id="job-date" required>
+
+                            <label for="auto-award">
+                                <input type="checkbox" id="auto-award" style="width: auto; margin-right: 0.5rem;">
+                                Auto-award to lowest trusted bidder
+                            </label>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Post Job</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card" id="job-listings" style="margin-top: 2rem;">
+                    <div class="card-header">
+                        <h2>Recent Jobs</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="jobs-container">
+                            <!-- Jobs will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Active Bids</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="tabs">
+                            <div class="tab active" data-tab="all-bids">All Bids</div>
+                            <div class="tab" data-tab="my-bids">My Bids</div>
+                        </div>
+
+                        <div class="tab-content active" id="all-bids">
+                            <div id="bids-container">
+                                <!-- Bids will be loaded here -->
+                            </div>
+                        </div>
+
+                        <div class="tab-content" id="my-bids">
+                            <p>You haven't placed any bids yet.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 2rem;">
+                    <div class="card-header">
+                        <h2>Top Workers</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="workers-container">
+                            <!-- Workers will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>JobBid</h3>
+                    <p>Connecting local jobs with trusted professionals since 2025.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Find Jobs</a></li>
+                        <li><a href="#">Post a Job</a></li>
+                        <li><a href="#">How it Works</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety Tips</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="#">support@jobbid.com</a></li>
+                        <li><a href="#">1-800-JOB-BIDS</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 JobBid. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample data - in a real application, this would come from a database
+        const sampleJobs = [
+            {
+                id: 1,
+                title: 'Backyard Landscaping Project',
+                category: 'Landscaping',
+                description: 'Need help with landscaping my backyard. Tasks include lawn mowing, planting flowers, and general cleanup.',
+                location: '123 Park Ave, Seattle, WA',
+                budgetMin: 100,
+                budgetMax: 250,
+                date: '2025-05-15',
+                postedAt: '2025-05-01',
+                bids: 3,
+                status: 'active'
+            },
+            {
+                id: 2,
+                title: 'House Painting - 3 Bedrooms',
+                category: 'Home Improvement',
+                description: 'Looking for someone to paint 3 bedrooms in my house. Walls only, ceilings not included.',
+                location: '456 Oak St, Portland, OR',
+                budgetMin: 300,
+                budgetMax: 600,
+                date: '2025-05-20',
+                postedAt: '2025-05-02',
+                bids: 5,
+                status: 'active'
+            },
+            {
+                id: 3,
+                title: 'Kitchen Sink Installation',
+                category: 'Plumbing',
+                description: 'Need a plumber to install a new kitchen sink. The old one has been removed already.',
+                location: '789 Maple Rd, Vancouver, WA',
+                budgetMin: 150,
+                budgetMax: 300,
+                date: '2025-05-10',
+                postedAt: '2025-05-01',
+                bids: 2,
+                status: 'active'
+            }
+        ];
+
+        const sampleBids = [
+            {
+                id: 1,
+                jobId: 1,
+                workerId: 1,
+                amount: 180,
+                message: 'I have 5 years of experience in landscaping and can complete this job in one day.',
+                createdAt: '2025-05-01T14:30:00Z'
+            },
+            {
+                id: 2,
+                jobId: 1,
+                workerId: 2,
+                amount: 150,
+                message: 'Professional landscaper with all necessary equipment. Available this weekend.',
+                createdAt: '2025-05-01T16:45:00Z'
+            },
+            {
+                id: 3,
+                jobId: 1,
+                workerId: 3,
+                amount: 200,
+                message: 'I specialize in garden design and landscaping. Can provide references from similar jobs.',
+                createdAt: '2025-05-02T09:15:00Z'
+            },
+            {
+                id: 4,
+                jobId: 2,
+                workerId: 4,
+                amount: 450,
+                message: 'Professional painter with 10+ years experience. I use premium paints and provide excellent finish.',
+                createdAt: '2025-05-02T11:20:00Z'
+            },
+            {
+                id: 5,
+                jobId: 2,
+                workerId: 5,
+                amount: 400,
+                message: 'I can complete this job in 2 days with high-quality results. Price includes all materials.',
+                createdAt: '2025-05-02T13:40:00Z'
+            }
+        ];
+
+        const sampleWorkers = [
+            {
+                id: 1,
+                name: 'Michael Johnson',
+                avatar: '/api/placeholder/40/40',
+                rating: 4.8,
+                reviews: 32,
+                skills: ['Landscaping', 'Gardening', 'Lawn Care']
+            },
+            {
+                id: 2,
+                name: 'Sarah Williams',
+                avatar: '/api/placeholder/40/40',
+                rating: 4.9,
+                reviews: 47,
+                skills: ['Landscaping', 'Irrigation', 'Fence Installation']
+            },
+            {
+                id: 3,
+                name: 'David Lee',
+                avatar: '/api/placeholder/40/40',
+                rating: 4.7,
+                reviews: 23,
+                skills: ['Garden Design', 'Landscaping', 'Tree Trimming']
+            },
+            {
+                id: 4,
+                name: 'Jennifer Brown',
+                avatar: '/api/placeholder/40/40',
+                rating: 4.9,
+                reviews: 56,
+                skills: ['Interior Painting', 'Exterior Painting', 'Wallpaper']
+            },
+            {
+                id: 5,
+                name: 'Robert Garcia',
+                avatar: '/api/placeholder/40/40',
+                rating: 4.6,
+                reviews: 38,
+                skills: ['Painting', 'Drywall Repair', 'Texture Application']
+            }
+        ];
+
+        // Load jobs
+        function loadJobs() {
+            const jobsContainer = document.getElementById('jobs-container');
+            jobsContainer.innerHTML = '';
+
+            sampleJobs.forEach(job => {
+                const jobCard = document.createElement('div');
+                jobCard.className = 'job-card';
+                jobCard.innerHTML = `
+                    <div class="job-header">
+                        <h3 class="job-title">${job.title}</h3>
+                        <div class="job-budget">$${job.budgetMin} - $${job.budgetMax}</div>
+                    </div>
+                    <div class="job-meta">
+                        <div><i class="fas fa-tag"></i> ${job.category}</div>
+                        <div><i class="fas fa-map-marker-alt"></i> ${job.location}</div>
+                        <div><i class="fas fa-calendar"></i> ${job.date}</div>
+                        <div><i class="fas fa-gavel"></i> ${job.bids} bids</div>
+                    </div>
+                    <div class="job-details">
+                        <p>${job.description.length > 100 ? job.description.substring(0, 100) + '...' : job.description}</p>
+                    </div>
+                    <div class="job-actions">
+                        <span>Posted on ${formatDate(job.postedAt)}</span>
+                        <button class="btn btn-primary bid-btn" data-job-id="${job.id}">Place Bid</button>
+                    </div>
+                `;
+                jobsContainer.appendChild(jobCard);
+            });
+
+            // Add event listeners to bid buttons
+            document.querySelectorAll('.bid-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const jobId = this.getAttribute('data-job-id');
+                    alert(`Bid form for job #${jobId} would open here`);
+                });
+            });
+        }
+
+        // Load bids
+        function loadBids() {
+            const bidsContainer = document.getElementById('bids-container');
+            bidsContainer.innerHTML = '';
+
+            sampleBids.forEach(bid => {
+                const worker = sampleWorkers.find(w => w.id === bid.workerId);
+                const job = sampleJobs.find(j => j.id === bid.jobId);
+                
+                const bidCard = document.createElement('div');
+                bidCard.className = 'bid-card';
+                bidCard.innerHTML = `
+                    <div class="bid-header">
+                        <div class="worker-info">
+                            <img src="${worker.avatar}" alt="${worker.name}" class="worker-avatar">
+                            <div>
+                                <div class="worker-name">${worker.name}</div>
+                                <div class="worker-rating">${'★'.repeat(Math.floor(worker.rating))}${worker.rating % 1 >= 0.5 ? '½' : ''} (${worker.reviews})</div>
+                            </div>
+                        </div>
+                        <div class="bid-amount">$${bid.amount}</div>
+                    </div>
+                    <div class="bid-job"><strong>Job:</strong> ${job.title}</div>
+                    <div class="bid-message">${bid.message}</div>
+                    <div style="text-align: right; margin-top: 0.5rem; color: var(--gray-dark); font-size: 0.9rem;">
+                        Bid placed on ${formatDate(bid.createdAt)}
+                    </div>
+                `;
+                bidsContainer.appendChild(bidCard);
+            });
+        }
+
+        // Load workers
+        function loadWorkers() {
+            const workersContainer = document.getElementById('workers-container');
+            workersContainer.innerHTML = '';
+
+            sampleWorkers.forEach(worker => {
+                const workerCard = document.createElement('div');
+                workerCard.className = 'bid-card';
+                workerCard.innerHTML = `
+                    <div class="worker-info">
+                        <img src="${worker.avatar}" alt="${worker.name}" class="worker-avatar">
+                        <div>
+                            <div class="worker-name">${worker.name}</div>
+                            <div class="worker-rating">${'★'.repeat(Math.floor(worker.rating))}${worker.rating % 1 >= 0.5 ? '½' : ''} (${worker.reviews})</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 0.5rem;">
+                        <strong>Skills:</strong> ${worker.skills.join(', ')}
+                    </div>
+                `;
+                workersContainer.appendChild(workerCard);
+            });
+        }
+
+        // Handle form submission
+        document.getElementById('job-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const jobData = {
+                title: document.getElementById('job-title').value,
+                category: document.getElementById('job-category').value,
+                description: document.getElementById('job-description').value,
+                location: document.getElementById('job-location').value,
+                budgetMin: document.getElementById('job-budget-min').value,
+                budgetMax: document.getElementById('job-budget-max').value,
+                date: document.getElementById('job-date').value,
+                autoAward: document.getElementById('auto-award').checked
+            };
+            
+            alert('Job posted successfully! In a real app, this would be saved to the database.');
+            
+            // Clear form
+            this.reset();
+            
+            // Add the new job to our sample data (in a real app, this would be handled by the backend)
+            const newJob = {
+                id: sampleJobs.length + 1,
+                ...jobData,
+                postedAt: new Date().toISOString().split('T')[0],
+                bids: 0,
+                status: 'active'
+            };
+            
+            sampleJobs.unshift(newJob);
+            
+            // Reload jobs
+            loadJobs();
+        });
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Show the corresponding tab content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Helper function to format dates
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        // Initialize the page
+        window.addEventListener('DOMContentLoaded', function() {
+            loadJobs();
+            loadBids();
+            loadWorkers();
+        });
+    </script>
+</body>
+</html>
