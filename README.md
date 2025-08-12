@@ -81,7 +81,7 @@ Edit
 http://localhost:3000
 
 📷 Screenshots
-
+beta/frontend/Screenshots/home.png
 
 📌 Project Status
 🚧 Under Development – This project is currently in progress. Features and structure may change in future updates.
