@@ -82,7 +82,17 @@ http://localhost:3000
 
 📷 Screenshots
 
-WorkNest_Project/beta/frontend/Screenshots/home.jpg
+| Screenshot                     | Description                 |
+|-------------------------------|-----------------------------|
+| ![About Us](WorkNest_Project/beta/frontend/Screenshots/About_us(1).jpg)          | About Us page               |
+| ![Bidding](WorkNest_Project/beta/frontend/Screenshots/Bidding.jpg)               | Bidding page                |
+| ![Contact Us Dark](WorkNest_Project/beta/frontend/Screenshots/Contact_us(dark theme).jpg) | Contact Us - Dark Theme     |
+| ![Contact Us Light](WorkNest_Project/beta/frontend/Screenshots/Contact_us(light theme).jpg) | Contact Us - Light Theme    |
+| ![Register](WorkNest_Project/beta/frontend/Screenshots/Register(user).jpg)       | User registration page      |
+| ![Register Pop-up](WorkNest_Project/beta/frontend/Screenshots/Register_pop_up.jpg) | Registration pop-up window  |
+| ![Home](WorkNest_Project/beta/frontend/Screenshots/home.jpg)                     | Homepage                   |
+| ![Login](WorkNest_Project/beta/frontend/Screenshots/login.jpg)                   | Login page                 |
+
 
 
 📌 Project Status
