@@ -1,9 +1,12 @@
 WorkNest Project
+
 📌 Overview
+
 WorkNest is a platform designed to simplify and streamline workplace collaboration, task management, and communication.
 It provides an intuitive interface for managing projects, assigning tasks, and tracking progress, helping teams work efficiently in one central hub.
 
 ✨ Features
+
 📂 Project & Task Management – Create, assign, and track tasks with deadlines.
 
 👥 User Roles & Authentication – Secure login system with role-based permissions.
@@ -16,7 +19,9 @@ It provides an intuitive interface for managing projects, assigning tasks, and t
 
 📱 Responsive Design – Works seamlessly on desktops, tablets, and mobiles.
 
+
 🛠 Tech Stack
+
 Frontend: HTML5, CSS3, JavaScript (optionally React/Bootstrap if used)
 
 Backend: Node.js / Python / PHP (update based on your project)
@@ -25,7 +30,9 @@ Database: MySQL / MongoDB (update based on your project)
 
 Version Control: Git & GitHub
 
+
 📂 Folder Structure
+
 csharp
 Copy
 Edit
@@ -80,6 +87,7 @@ Copy
 Edit
 http://localhost:3000
 
+
 📷 Screenshots
 
 | Screenshot                     | Description                 |
@@ -97,6 +105,7 @@ http://localhost:3000
 
 📌 Project Status
 🚧 Under Development – This project is currently in progress. Features and structure may change in future updates.
+
 
 📜 License
 This project is licensed under the MIT License – feel free to modify and distribute with attribution.
