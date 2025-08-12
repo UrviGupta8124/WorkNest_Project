@@ -86,8 +86,8 @@ http://localhost:3000
 |-------------------------------|-----------------------------|
 | ![About Us](beta/frontend/Screenshots/About_us(1).jpg)          | About Us page               |
 | ![Bidding](beta/frontend/Screenshots/Bidding.jpg)               | Bidding page                |
-| ![Contact Us Dark](beta/frontend/Screenshots/Contact_us(dark theme).jpg) | Contact Us - Dark Theme     |
-| ![Contact Us Light](beta/frontend/Screenshots/Contact_us(light theme).jpg) | Contact Us - Light Theme    |
+| ![Contact Us Dark](beta/frontend/Screenshots/Contact_us(dark%20theme).jpg) | Contact Us - Dark Theme     |
+| ![Contact Us Light](beta/frontend/Screenshots/Contact_us(light%20theme).jpg) | Contact Us - Light Theme    |
 | ![Register](beta/frontend/Screenshots/Register(user).jpg)       | User registration page      |
 | ![Register Pop-up](beta/frontend/Screenshots/Register_pop_up.jpg) | Registration pop-up window  |
 | ![Home](beta/frontend/Screenshots/home.jpg)                     | Homepage                   |
